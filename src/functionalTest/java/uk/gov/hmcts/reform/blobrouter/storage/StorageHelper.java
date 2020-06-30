@@ -1,6 +1,10 @@
 package uk.gov.hmcts.reform.blobrouter.storage;
 
+import com.azure.core.util.Context;
 import com.azure.storage.blob.BlobServiceClient;
+import com.azure.storage.blob.models.BlobHttpHeaders;
+import com.azure.storage.blob.models.BlobRequestConditions;
+import com.azure.storage.common.implementation.Constants;
 
 import java.io.ByteArrayInputStream;
 
@@ -16,11 +20,27 @@ public final class StorageHelper {
         String fileName,
         byte[] fileContent
     ) {
+        BlobRequestConditions blobRequestConditions = new BlobRequestConditions();
+        blobRequestConditions.setIfNoneMatch(Constants.HeaderConstants.ETAG_WILDCARD);
+
+        BlobHttpHeaders headers = new BlobHttpHeaders();
+
         client
             .getBlobContainerClient(containerName)
             .getBlobClient(fileName)
             .getBlockBlobClient()
-            .upload(new ByteArrayInputStream(fileContent), fileContent.length, false);
+            .uploadWithResponse(
+                new ByteArrayInputStream(fileContent),
+                fileContent.length,
+                headers.setContentType("application/zip"),
+                null,
+                null,
+                null,
+                blobRequestConditions,
+                null,
+                Context.NONE
+            );
+
     }
 
     public static boolean blobExists(
