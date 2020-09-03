@@ -11,8 +11,8 @@
     </send-request>
     <!-- transform keyvault secret response to string -->
     <set-variable name="apiKeySecretResponse" value="@{
-            var secret = ((IResponse)context.Variables["apiKeySecret"]).Body.As<JObject>();
-            return secret["value"].ToString();
+            var secret = ((IResponse)context.Variables[&quot;apiKeySecret&quot;]).Body.As<JObject>();
+            return secret[&quot;value&quot;].ToString();
         }" />
 
     <set-header name="Authorization" exists-action="override">
