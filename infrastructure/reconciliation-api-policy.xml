@@ -5,7 +5,7 @@
   <inbound>
     <base/>
     <send-request mode="new" response-variable-name="apiKeySecret" timeout="20" ignore-error="false">
-      <set-url>@("https://reform-scan-{ENV_NAME}.vault.azure.net/secrets/reconciliation-api-key/?api-version=7.0)"</set-url>
+      <set-url>https://reform-scan-{{environment}}.vault.azure.net/secrets/reconciliation-api-key/?api-version=7.0</set-url>
       <set-method>GET</set-method>
       <authentication-managed-identity resource="https://vault.azure.net" />
     </send-request>
