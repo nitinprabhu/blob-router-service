@@ -35,7 +35,7 @@ module "api_mgmt" {
   protocols = [
     "https"
   ]
-  service_url = "http://${var.product}-${var.component}-${var.env}.service.core-compute-${var.env}.internal"
+  service_url = "http://${var.product}-${var.component}-${var.env}.service.core-compute-${var.env}.internal?v2"
   swagger_url = "https://hmcts.github.io/reform-api-docs/specs/blob-router-service.json"
 }
 
